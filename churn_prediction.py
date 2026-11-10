@@ -44,9 +44,6 @@ print("\nData types after cleaning:")
 print(df.dtypes)
 # Step 5: Handle missing values
 
-median_value = df["TotalCharges"].median()
-
-df["TotalCharges"] = df["TotalCharges"].fillna(median_value)
 
 print("\nMissing values after imputation:")
 print(df.isnull().sum().sum())
