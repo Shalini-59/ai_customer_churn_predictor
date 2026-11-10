@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Churn Intelligence</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="app-layout">
+
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">C</div>
+                <div>
+                    <h2>ChurnIQ</h2>
+                    <span>INTELLIGENCE PLATFORM</span>
+                </div>
+            </div>
+
+            <p class="nav-heading">WORKSPACE</p>
+
+           <nav class="navigation">
+    <a href="/" class="nav-link active">
+        <span>▦</span> Dashboard
+    </a>
+    <a href="/predict" class="nav-link">
+        <span>◉</span> Predict Churn
+    </a>
+    <a href="/customers" class="nav-link">
+        <span>♙</span> Customers
+    </a>
+    <a href="/performance" class="nav-link">
+        <span>▥</span> Model Performance
+    </a>
+</nav>
+
+            <div class="sidebar-footer">
+                <div class="profile-avatar">A</div>
+                <div>
+                    <strong>Administrator</strong>
+                    <span>Telecom Analytics</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <p class="breadcrumb">Workspace / Overview</p>
+                    <h1>Dashboard</h1>
+                </div>
+                <div class="topbar-right">
+                    <span class="status-dot"></span>
+                    <span>Model ready</span>
+                </div>
+            </header>
+
+            <section class="welcome-section">
+                <div>
+                    <h2>Customer Overview</h2>
+                    <p>Monitor customer retention and understand churn patterns.</p>
+                </div>
+                <div class="date-label">TELCO CUSTOMER ANALYTICS</div>
+            </section>
+
+            <section class="metrics-grid">
+
+                <div class="metric-card">
+                    <div class="metric-heading">
+                        <span>Total Customers</span>
+                        <span class="metric-icon blue">♙</span>
+                    </div>
+                    <h2>7,043</h2>
+                    <p>Customers in dataset</p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-heading">
+                        <span>Churned Customers</span>
+                        <span class="metric-icon red">↗</span>
+                    </div>
+                    <h2>1,869</h2>
+                    <p>26.54% of total customers</p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-heading">
+                        <span>Retained Customers</span>
+                        <span class="metric-icon green">✓</span>
+                    </div>
+                    <h2>5,174</h2>
+                    <p>73.46% of total customers</p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-heading">
+                        <span>Model ROC-AUC</span>
+                        <span class="metric-icon purple">◎</span>
+                    </div>
+                    <h2>82.25%</h2>
+                    <p>Random Forest performance</p>
+                </div>
+
+            </section>
+
+            <section class="content-grid">
+
+                <div class="panel churn-panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Customer Churn Distribution</h3>
+                            <p>Distribution of customers by subscription status</p>
+                        </div>
+                        <span class="panel-tag">Dataset overview</span>
+                    </div>
+
+                    <div class="distribution">
+                        <div class="distribution-row">
+                            <div class="distribution-label">
+                                <span class="legend-dot retained"></span>
+                                <span>Retained customers</span>
+                                <strong>73.46%</strong>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-fill retained-fill"></div>
+                            </div>
+                        </div>
+
+                        <div class="distribution-row">
+                            <div class="distribution-label">
+                                <span class="legend-dot churned"></span>
+                                <span>Churned customers</span>
+                                <strong>26.54%</strong>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-fill churn-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel model-panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Prediction Model</h3>
+                            <p>Current machine learning model</p>
+                        </div>
+                        <span class="model-badge">Active</span>
+                    </div>
+
+                    <div class="model-details">
+                        <div class="model-symbol">RF</div>
+                        <div>
+                            <h4>Random Forest Classifier</h4>
+                            <p>Scikit-learn Pipeline</p>
+                        </div>
+                    </div>
+
+                    <div class="model-stat">
+                        <span>Accuracy</span>
+                        <strong>76.37%</strong>
+                    </div>
+
+                    <div class="model-stat">
+                        <span>Recall (Churn)</span>
+                        <strong>62.03%</strong>
+                    </div>
+
+                    <div class="model-stat">
+                        <span>F1-score (Churn)</span>
+                        <strong>58.22%</strong>
+                    </div>
+                </div>
+
+            </section>
+
+            <section class="panel insight-panel">
+                <div>
+                    <span class="insight-label">BUSINESS INSIGHT</span>
+                    <h3>Customer retention is an important priority.</h3>
+                    <p>
+                        Approximately 1 in 4 customers in this dataset discontinued
+                        their telecom service. Identifying customers at risk of
+                        leaving can help businesses plan retention strategies.
+                    </p>
+                </div>
+                <div class="insight-number">
+                    <strong>26.54%</strong>
+                    <span>Historical churn rate</span>
+                </div>
+            </section>
+
+            <footer class="footer">
+                Customer Churn Intelligence Platform
+                <span>Machine Learning Analytics</span>
+            </footer>
+
+        </main>
+    </div>
+
+</body>
+</html>

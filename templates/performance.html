@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Performance | ChurnIQ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .performance-content {
+            margin-top: 30px;
+        }
+
+        .performance-heading {
+            margin-bottom: 25px;
+        }
+
+        .performance-heading h2 {
+            color: #172b4d;
+            font-size: 20px;
+            margin-bottom: 7px;
+        }
+
+        .performance-heading p {
+            color: #8793a5;
+            font-size: 12px;
+        }
+
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .performance-card {
+            background: white;
+            border: 1px solid #e9edf3;
+            border-radius: 10px;
+            padding: 23px;
+        }
+
+        .performance-card h3 {
+            font-size: 14px;
+            color: #172b4d;
+            margin-bottom: 7px;
+        }
+
+        .performance-card > p {
+            color: #8793a5;
+            font-size: 11px;
+            margin-bottom: 22px;
+        }
+
+        .chart-container {
+            height: 280px;
+            position: relative;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px 10px;
+            text-align: left;
+            border-bottom: 1px solid #edf0f4;
+            font-size: 11px;
+        }
+
+        .comparison-table th {
+            background: #f6f8fb;
+            color: #78869a;
+        }
+
+        .comparison-table td {
+            color: #526178;
+        }
+
+        .comparison-table td:first-child {
+            color: #172b4d;
+            font-weight: 600;
+        }
+
+        .best-score {
+            color: #159b91 !important;
+            font-weight: 700;
+        }
+
+        .performance-highlight {
+            margin-top: 22px;
+            padding: 23px;
+            background: #f0f8f7;
+            border-left: 4px solid #159b91;
+            border-radius: 8px;
+        }
+
+        .performance-highlight h3 {
+            color: #172b4d;
+            font-size: 14px;
+            margin-bottom: 9px;
+        }
+
+        .performance-highlight p {
+            color: #68798c;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .section-spacing {
+            margin-top: 22px;
+        }
+
+        @media (max-width: 850px) {
+            .performance-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">C</div>
+            <div>
+                <h2>ChurnIQ</h2>
+                <span>INTELLIGENCE PLATFORM</span>
+            </div>
+        </div>
+
+        <p class="nav-heading">WORKSPACE</p>
+
+       <nav class="navigation">
+    <a href="/" class="nav-link">
+        <span>▦</span> Dashboard
+    </a>
+    <a href="/predict" class="nav-link">
+        <span>◉</span> Predict Churn
+    </a>
+    <a href="/customers" class="nav-link">
+        <span>♙</span> Customers
+    </a>
+    <a href="/performance" class="nav-link active">
+        <span>▥</span> Model Performance
+    </a>
+</nav>
+
+        <div class="sidebar-footer">
+            <div class="profile-avatar">A</div>
+            <div>
+                <strong>Administrator</strong>
+                <span>Telecom Analytics</span>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <p class="breadcrumb">Workspace / Model Performance</p>
+                <h1>Model Performance</h1>
+            </div>
+
+            <div class="topbar-right">
+                <span class="status-dot"></span>
+                <span>Evaluation complete</span>
+            </div>
+        </header>
+
+        <section class="performance-content">
+
+            <div class="performance-heading">
+                <h2>Machine Learning Evaluation</h2>
+                <p>Compare classification performance on the held-out test dataset.</p>
+            </div>
+
+            <div class="performance-grid">
+
+                <div class="performance-card">
+                    <h3>Model Comparison</h3>
+                    <p>Evaluation metrics for both classification algorithms.</p>
+
+                    <div style="overflow-x:auto;">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>Decision Tree</th>
+                                    <th>Random Forest</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>Accuracy</td>
+                                    <td>72.89%</td>
+                                    <td class="best-score">76.37%</td>
+                                </tr>
+                                <tr>
+                                    <td>Precision</td>
+                                    <td>48.96%</td>
+                                    <td class="best-score">54.85%</td>
+                                </tr>
+                                <tr>
+                                    <td>Recall</td>
+                                    <td>50.53%</td>
+                                    <td class="best-score">62.03%</td>
+                                </tr>
+                                <tr>
+                                    <td>F1-score</td>
+                                    <td>49.74%</td>
+                                    <td class="best-score">58.22%</td>
+                                </tr>
+                                <tr>
+                                    <td>ROC-AUC</td>
+                                    <td>65.73%</td>
+                                    <td class="best-score">82.25%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="performance-card">
+                    <h3>Accuracy Comparison</h3>
+                    <p>Test-set accuracy of both classification models.</p>
+
+                    <div class="chart-container">
+                        <canvas id="accuracyChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="performance-card">
+                    <h3>Precision, Recall and F1-score</h3>
+                    <p>Comparison of churn-class evaluation metrics.</p>
+
+                    <div class="chart-container">
+                        <canvas id="classificationChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="performance-card">
+                    <h3>ROC-AUC Comparison</h3>
+                    <p>Ability of each model to distinguish churn from non-churn.</p>
+
+                    <div class="chart-container">
+                        <canvas id="rocChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="performance-highlight">
+                <h3>Model Evaluation Insight</h3>
+                <p>
+                    Random Forest achieved an ROC-AUC of 82.25% and
+                    a churn-class recall of 62.03%, outperforming the
+                    Decision Tree model on the evaluated metrics.
+                    This indicates better overall discrimination and
+                    improved identification of customers who churned
+                    in the test dataset.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+    const chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: "bottom"
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 100,
+                ticks: {
+                    callback: value => value + "%"
+                }
+            }
+        }
+    };
+
+    new Chart(document.getElementById("accuracyChart"), {
+        type: "bar",
+        data: {
+            labels: ["Decision Tree", "Random Forest"],
+            datasets: [{
+                label: "Accuracy",
+                data: [72.89, 76.37],
+                backgroundColor: ["#9aabc0", "#159b91"],
+                borderRadius: 6
+            }]
+        },
+        options: chartOptions
+    });
+
+    new Chart(document.getElementById("classificationChart"), {
+        type: "bar",
+        data: {
+            labels: ["Precision", "Recall", "F1-score"],
+            datasets: [
+                {
+                    label: "Decision Tree",
+                    data: [48.96, 50.53, 49.74],
+                    backgroundColor: "#9aabc0",
+                    borderRadius: 4
+                },
+                {
+                    label: "Random Forest",
+                    data: [54.85, 62.03, 58.22],
+                    backgroundColor: "#159b91",
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: chartOptions
+    });
+
+    new Chart(document.getElementById("rocChart"), {
+        type: "bar",
+        data: {
+            labels: ["Decision Tree", "Random Forest"],
+            datasets: [{
+                label: "ROC-AUC",
+                data: [65.73, 82.25],
+                backgroundColor: ["#9aabc0", "#159b91"],
+                borderRadius: 6
+            }]
+        },
+        options: chartOptions
+    });
+</script>
+
+</body>
+</html>

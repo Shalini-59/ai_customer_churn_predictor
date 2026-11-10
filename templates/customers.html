@@ -1,0 +1,366 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customers | ChurnIQ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .customer-content {
+            margin-top: 30px;
+        }
+
+        .customer-heading {
+            margin-bottom: 24px;
+        }
+
+        .customer-heading h2 {
+            color: #172b4d;
+            font-size: 20px;
+            margin-bottom: 7px;
+        }
+
+        .customer-heading p {
+            color: #8793a5;
+            font-size: 12px;
+        }
+
+        .customer-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .summary-card {
+            background: white;
+            border: 1px solid #e9edf3;
+            border-radius: 9px;
+            padding: 20px;
+        }
+
+        .summary-card span {
+            display: block;
+            color: #8793a5;
+            font-size: 11px;
+        }
+
+        .summary-card strong {
+            display: block;
+            color: #172b4d;
+            font-size: 25px;
+            margin-top: 10px;
+        }
+
+        .customer-table-panel {
+            background: white;
+            border: 1px solid #e9edf3;
+            border-radius: 10px;
+            padding: 23px;
+        }
+
+        .table-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .table-toolbar h3 {
+            color: #172b4d;
+            font-size: 14px;
+        }
+
+        .table-filters {
+            display: flex;
+            gap: 10px;
+        }
+
+        .table-filters input,
+        .table-filters select {
+            padding: 10px;
+            border: 1px solid #dfe5ed;
+            border-radius: 6px;
+            font-size: 11px;
+            outline: none;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .customer-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        .customer-table th {
+            background: #f6f8fb;
+            color: #78869a;
+            font-size: 10px;
+            font-weight: 600;
+            text-align: left;
+            padding: 14px 12px;
+        }
+
+        .customer-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #edf0f4;
+            font-size: 11px;
+            color: #526178;
+        }
+
+        .customer-table td:first-child {
+            color: #172b4d;
+            font-weight: 600;
+        }
+
+        .risk-label {
+            display: inline-block;
+            padding: 6px 9px;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .risk-high {
+            background: #fff0ee;
+            color: #d45e55;
+        }
+
+        .risk-medium {
+            background: #fff6e7;
+            color: #b78327;
+        }
+
+        .risk-low {
+            background: #e8f7f1;
+            color: #218a68;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 35px;
+            color: #8793a5;
+            font-size: 12px;
+        }
+
+        .table-note {
+            color: #8793a5;
+            font-size: 10px;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 750px) {
+            .customer-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .table-toolbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .table-filters {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">C</div>
+            <div>
+                <h2>ChurnIQ</h2>
+                <span>INTELLIGENCE PLATFORM</span>
+            </div>
+        </div>
+
+        <p class="nav-heading">WORKSPACE</p>
+
+        <nav class="navigation">
+    <a href="/" class="nav-link">
+        <span>▦</span> Dashboard
+    </a>
+    <a href="/predict" class="nav-link">
+        <span>◉</span> Predict Churn
+    </a>
+    <a href="/customers" class="nav-link active">
+        <span>♙</span> Customers
+    </a>
+    <a href="/performance" class="nav-link">
+        <span>▥</span> Model Performance
+    </a>
+</nav>
+        <div class="sidebar-footer">
+            <div class="profile-avatar">A</div>
+            <div>
+                <strong>Administrator</strong>
+                <span>Telecom Analytics</span>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <p class="breadcrumb">Workspace / Customers</p>
+                <h1>Customers</h1>
+            </div>
+
+            <div class="topbar-right">
+                <span class="status-dot"></span>
+                <span>Model ready</span>
+            </div>
+        </header>
+
+        <section class="customer-content">
+
+            <div class="customer-heading">
+                <h2>Customer Management</h2>
+                <p>Explore customer records and their historical subscription status.</p>
+            </div>
+
+            <div class="customer-summary">
+
+                <div class="summary-card">
+                    <span>Total Customers</span>
+                    <strong>{{ total_customers }}</strong>
+                </div>
+
+                <div class="summary-card">
+                    <span>Currently Retained in Dataset</span>
+                    <strong>{{ retained_customers }}</strong>
+                </div>
+
+                <div class="summary-card">
+                    <span>Historically Churned</span>
+                    <strong>{{ churned_customers }}</strong>
+                </div>
+
+            </div>
+
+            <div class="customer-table-panel">
+
+                <div class="table-toolbar">
+                    <h3>Customer Records</h3>
+
+                    <div class="table-filters">
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Search customer ID..."
+                        >
+
+                        <select id="statusFilter">
+                            <option value="all">All statuses</option>
+                            <option value="Yes">Churned</option>
+                            <option value="No">Retained</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table class="customer-table" id="customerTable">
+
+                        <thead>
+                            <tr>
+                                <th>Customer ID</th>
+                                <th>Tenure</th>
+                                <th>Contract</th>
+                                <th>Monthly Charges</th>
+                                <th>Historical Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for customer in customers %}
+                            <tr data-status="{{ customer.Churn }}">
+
+                                <td>{{ customer.customerID }}</td>
+
+                                <td>{{ customer.tenure }} months</td>
+
+                                <td>{{ customer.Contract }}</td>
+
+                                <td>${{ "%.2f"|format(customer.MonthlyCharges) }}</td>
+
+                                <td>
+                                    {% if customer.Churn == "Yes" %}
+                                        <span class="risk-label risk-high">
+                                            Churned
+                                        </span>
+                                    {% else %}
+                                        <span class="risk-label risk-low">
+                                            Retained
+                                        </span>
+                                    {% endif %}
+                                </td>
+
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                    {% if not customers %}
+                    <div class="empty-message">
+                        No customer records available.
+                    </div>
+                    {% endif %}
+
+                </div>
+
+                <p class="table-note">
+                    Showing up to 100 customer records from the Telco dataset.
+                    Historical status is not a future churn prediction.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+    const searchInput = document.getElementById("searchInput");
+    const statusFilter = document.getElementById("statusFilter");
+    const rows = document.querySelectorAll("#customerTable tbody tr");
+
+    function filterCustomers() {
+        const search = searchInput.value.toLowerCase();
+        const status = statusFilter.value;
+
+        rows.forEach(row => {
+            const customerId = row.cells[0].textContent.toLowerCase();
+            const customerStatus = row.dataset.status;
+
+            const matchesSearch = customerId.includes(search);
+            const matchesStatus = status === "all" || customerStatus === status;
+
+            row.style.display = matchesSearch && matchesStatus ? "" : "none";
+        });
+    }
+
+    searchInput.addEventListener("input", filterCustomers);
+    statusFilter.addEventListener("change", filterCustomers);
+</script>
+
+</body>
+</html>

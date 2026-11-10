@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result | ChurnIQ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .result-container {
+            max-width: 850px;
+            margin: 55px auto;
+        }
+
+        .result-card {
+            background: white;
+            border: 1px solid #e9edf3;
+            border-radius: 12px;
+            padding: 35px;
+        }
+
+        .result-heading {
+            margin-bottom: 30px;
+        }
+
+        .result-heading h2 {
+            color: #172b4d;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .result-heading p {
+            color: #8793a5;
+            font-size: 13px;
+        }
+
+        .result-status {
+            padding: 25px;
+            border-radius: 10px;
+            background: #f5f7fb;
+            text-align: center;
+        }
+
+        .result-status h3 {
+            font-size: 24px;
+            color: #172b4d;
+            margin: 12px 0;
+        }
+
+        .result-status p {
+            color: #8793a5;
+            font-size: 12px;
+        }
+
+        .risk-high {
+            color: #d45e55 !important;
+        }
+
+        .risk-medium {
+            color: #b78327 !important;
+        }
+
+        .risk-low {
+            color: #218a68 !important;
+        }
+
+        .probability {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 1px solid #e9edf3;
+        }
+
+        .probability strong {
+            display: block;
+            color: #172b4d;
+            font-size: 42px;
+            margin-bottom: 6px;
+        }
+
+        .probability span {
+            color: #8793a5;
+            font-size: 12px;
+        }
+
+        .risk-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #e9edf3;
+            font-size: 13px;
+        }
+
+        .risk-details span {
+            color: #8793a5;
+        }
+
+        .risk-details strong {
+            color: #172b4d;
+        }
+
+        .action-box {
+            margin-top: 25px;
+            padding: 20px;
+            border-left: 4px solid #159b91;
+            background: #f0f8f7;
+            border-radius: 6px;
+        }
+
+        .action-box h4 {
+            color: #172b4d;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .action-box p {
+            color: #68798c;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .result-button {
+            text-decoration: none;
+            padding: 13px 20px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .primary-button {
+            background: #159b91;
+            color: white;
+        }
+
+        .secondary-button {
+            border: 1px solid #dfe5ed;
+            color: #526178;
+        }
+
+        @media (max-width: 750px) {
+            .result-container {
+                margin: 25px auto;
+            }
+
+            .result-card {
+                padding: 20px;
+            }
+
+            .result-actions {
+                flex-direction: column;
+            }
+
+            .result-button {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">C</div>
+            <div>
+                <h2>ChurnIQ</h2>
+                <span>INTELLIGENCE PLATFORM</span>
+            </div>
+        </div>
+
+        <p class="nav-heading">WORKSPACE</p>
+
+       <nav class="navigation">
+    <a href="/" class="nav-link">
+        <span>▦</span> Dashboard
+    </a>
+    <a href="/predict" class="nav-link">
+        <span>◉</span> Predict Churn
+    </a>
+    <a href="/customers" class="nav-link">
+        <span>♙</span> Customers
+    </a>
+    <a href="/performance" class="nav-link">
+        <span>▥</span> Model Performance
+    </a>
+</nav>
+
+        <div class="sidebar-footer">
+            <div class="profile-avatar">A</div>
+            <div>
+                <strong>Administrator</strong>
+                <span>Telecom Analytics</span>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <p class="breadcrumb">Workspace / Prediction / Result</p>
+                <h1>Prediction Result</h1>
+            </div>
+
+            <div class="topbar-right">
+                <span class="status-dot"></span>
+                <span>Model ready</span>
+            </div>
+        </header>
+
+        <div class="result-container">
+
+            <div class="result-card">
+
+                <div class="result-heading">
+                    <h2>Customer Risk Assessment</h2>
+                    <p>Prediction generated using the Random Forest classification model.</p>
+                </div>
+
+                <div class="result-status">
+
+                    <p>MODEL PREDICTION</p>
+
+                    <h3 class="{% if result.risk == 'High' %}risk-high{% elif result.risk == 'Medium' %}risk-medium{% else %}risk-low{% endif %}">
+                        {{ result.prediction }}
+                    </h3>
+
+                    <p>Estimated customer churn outcome</p>
+
+                </div>
+
+                <div class="probability">
+                    <strong>{{ result.probability }}%</strong>
+                    <span>Estimated churn probability</span>
+                </div>
+
+                <div class="risk-details">
+                    <span>Risk classification</span>
+
+                    <strong class="{% if result.risk == 'High' %}risk-high{% elif result.risk == 'Medium' %}risk-medium{% else %}risk-low{% endif %}">
+                        {{ result.risk }} Risk
+                    </strong>
+                </div>
+
+                <div class="action-box">
+                    <h4>Suggested Business Action</h4>
+                    <p>{{ result.action }}</p>
+                </div>
+
+                <div class="result-actions">
+                    <a href="/predict" class="result-button primary-button">
+                        Predict Another Customer
+                    </a>
+
+                    <a href="/" class="result-button secondary-button">
+                        Back to Dashboard
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
