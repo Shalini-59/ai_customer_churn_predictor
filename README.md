@@ -29,6 +29,10 @@ Two classification algorithms are implemented and compared:
 - Confusion matrix and ROC curve visualizations
 - Feature importance analysis
 - Saving and loading the trained machine learning pipeline
+- Flask-based web application for customer churn prediction
+- Customer churn classification into two outcomes: Likely to Churn and Likely to Stay
+- Churn risk categorization into Low, Medium and High based on predicted probability
+- Business recommendations based on customer churn risk
 
 ## Model Performance
 
