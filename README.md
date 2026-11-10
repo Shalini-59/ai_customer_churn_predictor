@@ -1,14 +1,5 @@
 # Customer Churn Prediction
 
-<<<<<<< HEAD
-## Overview
-A Machine Learning project that predicts whether a telecommunications customer is likely to leave a service provider.
-
-## Dataset
-Telco Customer Churn dataset containing 7,043 customer records and 20 input attributes.
-
-## Technologies Used
-=======
 A machine learning project that predicts whether a telecom customer is likely to stay or leave using classification algorithms.
 
 ## Project Overview
@@ -21,42 +12,12 @@ Two classification algorithms are implemented and compared:
 
 ## Technologies Used
 
->>>>>>> origin/main
 - Python
 - Pandas and NumPy
 - Matplotlib and Seaborn
 - Scikit-learn
 - Joblib
 
-<<<<<<< HEAD
-## Machine Learning Models
-- Decision Tree Classifier
-- Random Forest Classifier
-
-## Key Features
-- Data cleaning and preprocessing
-- Categorical feature encoding
-- Model training and comparison
-- Confusion matrix analysis
-- ROC curve visualization
-- Feature importance analysis
-- Model serialization
-
-## Project Structure
-- `churn_prediction.py` – Main ML implementation
-- `outputs/` – Model evaluation graphs
-- `customer_churn_model.pkl` – Trained model
-- `requirements.txt` – Project dependencies
-
-## How to Run
-1. Install dependencies:
-   `pip install -r requirements.txt`
-2. Run:
-   `python churn_prediction.py`
-
-## Author
-Shalini T
-=======
 ## Key Features
 
 - Data cleaning and preprocessing
@@ -121,5 +82,4 @@ A web-based customer churn intelligence dashboard using Flask, MySQL and the tra
 
 ## Author
 
-Shalini T
->>>>>>> origin/main
+Shalini.T
